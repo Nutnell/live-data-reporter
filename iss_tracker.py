@@ -10,20 +10,9 @@ load_dotenv()
 # Define constants
 ISS_POSITION_API_URL = "http://api.open-notify.org/iss-now.json"
 DATA_FILE_PATH = "data/iss_data.txt"
-LOG_FILE_PATH = "logs.txt"
 
-#Logs an action with a timestamp and status to the logs.txt file.
-def log_action(module, action, status):
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    log_entry = f"{timestamp} - {module} - {action} - {status}\n"
-    try:
-        with open(LOG_FILE_PATH, "a") as f:
-            f.write(log_entry)
-    except IOError as e:
-        print(f"Error writing to log file: {e}")
-
-#    Fetches the real-time position of the ISS from the Open Notify API, then logs the API request and saves ISS position data to data/iss_data.txt and also displays the coordinates in the console.
-def fetch_iss_position():
+# Fetches the real-time position of the ISS from the Open Notify API, then logs the API request and saves ISS position data to data/iss_data.txt and also displays the coordinates in the console.
+def fetch_iss_position(logger_func):
     print("Fetching ISS position data...")
     try:
         response = requests.get(ISS_POSITION_API_URL)
@@ -47,7 +36,7 @@ def fetch_iss_position():
         if latitude is None or longitude is None:
             raise ValueError("ISS position data is incomplete.")
 
-        log_action("ISS Tracker Module", "Fetch ISS Position API Call", "Success")
+        logger_func("ISS Tracker Module", "Fetch ISS Position API Call", "Success")
 
         # Prepare data for saving and printing
         output_lines = [
@@ -65,10 +54,10 @@ def fetch_iss_position():
                 for line in output_lines:
                     f.write(line + "\n")
             print(f"ISS position data saved to {DATA_FILE_PATH}")
-            log_action("ISS Tracker Module", "Save ISS Position Data", "Success")
+            logger_func("ISS Tracker Module", "Save ISS Position Data", "Success")
         except IOError as e:
             print(f"Error saving ISS position data to file: {e}")
-            log_action("ISS Tracker Module", "Save ISS Position Data", f"Failure: {e}")
+            logger_func("ISS Tracker Module", "Save ISS Position Data", f"Failure: {e}")
 
         # Print to console
         for line in output_lines[1:]:
@@ -76,17 +65,20 @@ def fetch_iss_position():
 
     except requests.exceptions.RequestException as e:
         print(f"Error fetching ISS position data: {e}")
-        log_action("ISS Tracker Module", "Fetch ISS Position API Call", f"Failure: {e}")
+        logger_func("ISS Tracker Module", "Fetch ISS Position API Call", f"Failure: {e}")
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON response from ISS position API: {e}")
-        log_action("ISS Tracker Module", "Decode ISS JSON", f"Failure: {e}")
+        logger_func("ISS Tracker Module", "Decode ISS JSON", f"Failure: {e}")
     except ValueError as e:
         print(f"Data processing error: {e}")
-        log_action("ISS Tracker Module", "Process ISS Data", f"Failure: {e}")
+        logger_func("ISS Tracker Module", "Process ISS Data", f"Failure: {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-        log_action("ISS Tracker Module", "Unexpected Error", f"Failure: {e}")
+        logger_func("ISS Tracker Module", "Unexpected Error", f"Failure: {e}")
 
 
 if __name__ == "__main__":
-    fetch_iss_position()
+    def dummy_log_action(module, action, status):
+        print(f"[DUMMY LOG] {module} - {action} - {status}")
+        fetch_iss_position(dummy_log_action)
+    

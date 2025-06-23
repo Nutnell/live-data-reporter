@@ -16,27 +16,15 @@ NEWS_API_KEY = os.getenv("NEWS_API_KEY")  # Retrieve API key from environment va
 ALPHA_VANTAGE_BASE_URL = "https://www.alphavantage.co/query"
 ALPHA_VANTAGE_API_KEY = os.getenv(
     "ALPHA_VANTAGE_API_KEY"
-)  # Retrieve API key from environment variables
-
-LOG_FILE_PATH = "logs.txt"
-
-
-def log_action(module, action, status):
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    log_entry = f"{timestamp} - {module} - {action} - {status}\n"
-    try:
-        with open(LOG_FILE_PATH, "a") as f:
-            f.write(log_entry)
-    except IOError as e:
-        print(f"Error writing to log file: {e}")
+)
 
 # Fetches the top 3 U.S. business news headlines from NewsAPI, logs the API request, and displays them in the console.
-def fetch_top_us_business_news():
+def fetch_top_us_business_news(logger_func):
     if not NEWS_API_KEY:
         print(
             "Error: NEWS_API_KEY not found in .env file. Please get one from newsapi.org."
         )
-        log_action("News Module", "API Key Check", "Failure: NEWS_API_KEY missing")
+        logger_func("News Module", "API Key Check", "Failure: NEWS_API_KEY missing")
         return
 
     print("Fetching top U.S. business news...")
@@ -54,7 +42,7 @@ def fetch_top_us_business_news():
         data = response.json()
         articles = data.get("articles", [])
 
-        log_action("News Module", "Fetch News API Call", "Success")
+        logger_func("News Module", "Fetch News API Call", "Success")
 
         print("\n--- Top 3 U.S. Business Headlines ---")
         if articles:
@@ -71,21 +59,21 @@ def fetch_top_us_business_news():
 
     except requests.exceptions.RequestException as e:
         print(f"Error fetching news data: {e}")
-        log_action("News Module", "Fetch News API Call", f"Failure: {e}")
+        logger_func("News Module", "Fetch News API Call", f"Failure: {e}")
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON response from NewsAPI: {e}")
-        log_action("News Module", "Decode News JSON", f"Failure: {e}")
+        logger_func("News Module", "Decode News JSON", f"Failure: {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-        log_action("News Module", "Unexpected Error", f"Failure: {e}")
+        logger_func("News Module", "Unexpected Error", f"Failure: {e}")
 
 # Fetches the latest 5-minute stock price for IBM from Alpha Vantage, logs the API request, and displays the latest open price in the console.
-def fetch_ibm_stock_price():
+def fetch_ibm_stock_price(logger_func):
     if not ALPHA_VANTAGE_API_KEY:
         print(
             "Error: ALPHA_VANTAGE_API_KEY not found in .env file. Please get one from alphavantage.co."
         )
-        log_action(
+        logger_func(
             "Stock Module", "API Key Check", "Failure: ALPHA_VANTAGE_API_KEY missing"
         )
         return
@@ -108,14 +96,14 @@ def fetch_ibm_stock_price():
         if "Error Message" in data:
             error_msg = data["Error Message"]
             print(f"Alpha Vantage API Error: {error_msg}")
-            log_action("Stock Module", "Fetch Stock API Call", f"Failure: {error_msg}")
+            logger_func("Stock Module", "Fetch Stock API Call", f"Failure: {error_msg}")
             return
         if "Note" in data:  # API rate limit message
             note_msg = data["Note"]
             print(
                 f"Alpha Vantage API Note: {note_msg}. Please wait a minute and try again."
             )
-            log_action("Stock Module", "Fetch Stock API Call", f"Failure: {note_msg}")
+            logger_func("Stock Module", "Fetch Stock API Call", f"Failure: {note_msg}")
             return
 
         time_series = data.get("Time Series (5min)")
@@ -124,7 +112,7 @@ def fetch_ibm_stock_price():
             print(
                 "No 5-minute time series data found for IBM. API response might be empty or malformed."
             )
-            log_action(
+            logger_func(
                 "Stock Module", "Process Stock Data", "Failure: No time series data"
             )
             return
@@ -139,7 +127,7 @@ def fetch_ibm_stock_price():
         close_price = latest_data.get("4. close")
         volume = latest_data.get("5. volume")
 
-        log_action("Stock Module", "Fetch Stock API Call", "Success")
+        logger_func("Stock Module", "Fetch Stock API Call", "Success")
 
         print(f"\n--- IBM Stock Price (5-min) as of {latest_timestamp} ---")
         print(f"  Open: ${open_price}")
@@ -151,16 +139,23 @@ def fetch_ibm_stock_price():
 
     except requests.exceptions.RequestException as e:
         print(f"Error fetching stock data: {e}")
-        log_action("Stock Module", "Fetch Stock API Call", f"Failure: {e}")
+        logger_func("Stock Module", "Fetch Stock API Call", f"Failure: {e}")
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON response from Alpha Vantage: {e}")
-        log_action("Stock Module", "Decode Stock JSON", f"Failure: {e}")
+        logger_func("Stock Module", "Decode Stock JSON", f"Failure: {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-        log_action("Stock Module", "Unexpected Error", f"Failure: {e}")
+        logger_func("Stock Module", "Unexpected Error", f"Failure: {e}")
 
 
 if __name__ == "__main__":
+    def dummy_log_action(module, action, status):
+        print(f"[DUMMY LOG] {module} - {action} - {status}")
+
+    # Fetch top U.S. business news
+    fetch_top_us_business_news(dummy_log_action)
+
+    # Fetch IBM stock price
+    fetch_ibm_stock_price(dummy_log_action)
     
-    fetch_top_us_business_news()
-    # fetch_ibm_stock_price()
+  
