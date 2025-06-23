@@ -14,3 +14,9 @@ Astronauts currently in space:
   - Name: Li Cong, Craft: Tiangong
   - Name: Ye Guangfu, Craft: Tiangong
 --------------------------------------------------
+--- ISS Position (2025-06-23 22:20:31) ---
+  API Timestamp (UTC): 2025-06-23 22:20:31 UTC
+  Latitude: 2.3901
+  Longitude: -109.9687
+  Link for Map (approx): https://maps.google.com/maps?q=2.3901,-109.9687&z=5
+--------------------------------------------------
