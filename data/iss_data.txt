@@ -20,3 +20,15 @@ Astronauts currently in space:
   Longitude: -109.9687
   Link for Map (approx): https://maps.google.com/maps?q=2.3901,-109.9687&z=5
 --------------------------------------------------
+--- ISS Position (2025-06-23 22:37:45) ---
+  API Timestamp (UTC): 2025-06-23 22:37:45 UTC
+  Latitude: -44.6724
+  Longitude: -60.9135
+  Link for Map (approx): https://maps.google.com/maps?q=-44.6724,-60.9135&z=5
+--------------------------------------------------
+--- ISS Position (2025-06-23 22:42:21) ---
+  API Timestamp (UTC): 2025-06-23 22:42:21 UTC
+  Latitude: -50.8419
+  Longitude: -37.0649
+  Link for Map (approx): https://maps.google.com/maps?q=-50.8419,-37.0649&z=5
+--------------------------------------------------

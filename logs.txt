@@ -8,3 +8,12 @@
 2025-06-23 22:26:19 - Main Application - Exit Program - Success
 2025-06-23 22:28:14 - Main Application - Invalid Menu Choice - User input: 5
 2025-06-23 22:32:30 - Main Application - Exit Program - Success
+2025-06-23 22:35:40 - Stock Module - API Key Check - Failure: ALPHA_VANTAGE_API_KEY missing
+2025-06-23 22:37:45 - ISS Tracker Module - Fetch ISS Position API Call - Success
+2025-06-23 22:37:45 - ISS Tracker Module - Save ISS Position Data - Success
+2025-06-23 22:38:01 - Main Application - Exit Program - Success
+2025-06-23 22:38:16 - ISS Tracker Module - Fetch ISS Position API Call - Failure: HTTPConnectionPool(host='api.open-notfy.org', port=80): Max retries exceeded with url: /iss-now.json (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x0000025E51D470E0>: Failed to resolve 'api.open-notfy.org' ([Errno 11001] getaddrinfo failed)"))
+2025-06-23 22:42:21 - ISS Tracker Module - Fetch ISS Position API Call - Success
+2025-06-23 22:42:21 - ISS Tracker Module - Save ISS Position Data - Success
+2025-06-23 22:42:38 - Main Application - Invalid Menu Choice - User input: 
+2025-06-23 22:42:47 - Main Application - Exit Program - Success
