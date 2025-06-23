@@ -6,3 +6,5 @@
 2025-06-23 22:22:05 - Main Application - Exit Program - Success
 2025-06-23 22:24:04 - Stock Module - Fetch Stock API Call - Success
 2025-06-23 22:26:19 - Main Application - Exit Program - Success
+2025-06-23 22:28:14 - Main Application - Invalid Menu Choice - User input: 5
+2025-06-23 22:32:30 - Main Application - Exit Program - Success
