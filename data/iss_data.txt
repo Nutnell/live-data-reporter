@@ -1,0 +1,16 @@
+--- Astronauts in Space (2025-06-23 22:14:00) ---
+Total astronauts: 12
+Astronauts currently in space:
+  - Name: Oleg Kononenko, Craft: ISS
+  - Name: Nikolai Chub, Craft: ISS
+  - Name: Tracy Caldwell Dyson, Craft: ISS
+  - Name: Matthew Dominick, Craft: ISS
+  - Name: Michael Barratt, Craft: ISS
+  - Name: Jeanette Epps, Craft: ISS
+  - Name: Alexander Grebenkin, Craft: ISS
+  - Name: Butch Wilmore, Craft: ISS
+  - Name: Sunita Williams, Craft: ISS
+  - Name: Li Guangsu, Craft: Tiangong
+  - Name: Li Cong, Craft: Tiangong
+  - Name: Ye Guangfu, Craft: Tiangong
+--------------------------------------------------
